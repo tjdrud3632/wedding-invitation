@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title data-i18n="title">Invitación de boda</title>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+<div class="page">
+
+  <!-- HERO -->
+  <header class="hero" id="hero">
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+      <!-- ✅ TOP RIGHT -->
+      <div class="hero-topbar">
+        <!-- Language: globe + dropdown -->
+        <div class="lang-wrap">
+          <button class="icon-btn" id="langBtn" type="button" aria-label="Language">🌐</button>
+          <div class="lang-menu" id="langMenu" aria-hidden="true">
+            <button class="lang-item" type="button" data-lang="es">ES</button>
+            <button class="lang-item" type="button" data-lang="en">EN</button>
+            <button class="lang-item" type="button" data-lang="ko">KO</button>
+          </div>
+        </div>
+
+        <!-- BGM: icon + state -->
+        <div class="bgm-wrap">
+          <button id="bgmToggle" class="icon-btn" type="button" aria-label="BGM" aria-pressed="false">♪</button>
+          <span id="bgmState" class="mini-state">OFF</span>
+        </div>
+      </div>
+
+      <div class="hero-top"></div>
+      <div class="hero-bottom"></div>
+
+    </div>
+  </header>
+
+  <!-- INVITATION -->
+  <section class="section">
+    <div class="script-head" data-i18n="invitationTitle">Invitación de boda</div>
+
+    <p class="body" id="invitationText" data-i18n="invitationBody">
+      서로를 향해 긴 시간을 건너온 두 사람,<br/>
+      멀리 떨어져 있어도 이어진 마음으로 여기까지 왔습니다.<br/>
+      이 소중한 순간을 함께 나누고 축복해 주신다면<br/>
+      더할 나위 없이 감사하겠습니다.
+    </p>
+
+    <div class="names" id="mainNames">
+      Jacob Mocholí García<br/>
+      <span class="heart">❤</span><br/>
+      안성경
+    </div>
+
+    <!-- ✅ INV META -->
+    <div class="inv-meta" id="weddingMeta" aria-label="wedding info">
+      <div class="inv-block">
+        <div class="inv-date" id="metaDate"></div>
+
+        <div class="inv-margin">
+          <div class="inv-title">
+            <span class="inv-icon" aria-hidden="true">⛪</span>
+            <span data-i18n="ceremony">Ceremonia</span>
+          </div>
+          <div class="inv-addr" id="metaCeremonyAddr"></div>
+        </div>
+
+        <div class="inv-margin">
+          <div class="inv-title">
+            <span class="inv-icon" aria-hidden="true">🥂</span>
+            <span data-i18n="reception">Recepción</span>
+          </div>
+          <div class="inv-addr" id="metaReceptionAddr"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDAR + D-DAY -->
+  <section class="section thin-top">
+    <h2 class="section-title" data-i18n="calendar">CALENDARIO</h2>
+    <div class="date-big" id="dateBig"></div>
+
+    <div class="calendar" aria-label="calendar">
+      <div class="cal-head" id="calHead">
+        <!-- ✅ JS에서 언어별로 자동 렌더 -->
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+
+    <h2 class="section-title" style="margin-top:28px;" data-i18n="dday">CUENTA ATRÁS</h2>
+    <div class="countdown" aria-label="countdown">
+      <div class="cd-box"><div class="cd-label" id="lblDays">DAYS</div><div class="cd-num" id="cdDays">--</div></div>
+      <div class="cd-box"><div class="cd-label" id="lblHours">HOUR</div><div class="cd-num" id="cdHours">--</div></div>
+      <div class="cd-box"><div class="cd-label" id="lblMins">MIN</div><div class="cd-num" id="cdMins">--</div></div>
+      <div class="cd-box"><div class="cd-label" id="lblSecs">SEC</div><div class="cd-num" id="cdSecs">--</div></div>
+    </div>
+    <p class="dday" id="ddayText" data-i18n="ddayText">Faltan D- -- días</p>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="section thin-top">
+    <h2 class="section-title" data-i18n="gallery">GALERÍA</h2>
+    <div id="galleryGrid" class="gallery-grid"></div>
+    <button id="galleryMore" class="ghost-btn" type="button" data-i18n="galleryMore">Ver más</button>
+    <p class="small muted" data-i18n="galleryHint">Toca una foto para verla en grande. (Toca los lados / desliza)</p>
+  </section>
+
+  <!-- VIDEO -->
+  <section class="section thin-top">
+    <h2 class="section-title" data-i18n="video">VÍDEO</h2>
+    <div class="video-wrap">
+      <video id="weddingVideo" controls playsinline preload="metadata"></video>
+    </div>
+  </section>
+
+  <!-- MAP -->
+  <section class="section thin-top section-map">
+    <h2 class="section-title" data-i18n="location">UBICACIÓN</h2>
+
+    <div class="location-block">
+      <h3 class="location-title">
+        <span class="loc-icon" aria-hidden="true">⛪</span>
+        <span data-i18n="ceremony">Ceremonia</span>
+      </h3>
+      <p class="body muted" id="addrCeremony"></p>
+      <div class="map-embed">
+        <iframe id="gmapCeremony" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div class="location-block" style="margin-top:40px;">
+      <h3 class="location-title">
+        <span class="loc-icon" aria-hidden="true">🥂</span>
+        <span data-i18n="reception">Recepción</span>
+      </h3>
+      <p class="body muted" id="addrReception"></p>
+      <div class="map-embed">
+        <iframe id="gmapReception" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section class="section thin-top">
+    <h2 class="section-title" data-i18n="rsvp">CONFIRMACIÓN</h2>
+    <p class="body muted" data-i18n="rsvpHint">Por favor, confirma tu asistencia.</p>
+    <button id="rsvpBtn" class="cta" type="button" data-i18n="rsvpBtn">Confirmar asistencia</button>
+  </section>
+
+  <!-- ACCOUNT -->
+  <section class="section thin-top">
+    <h2 class="section-title" data-i18n="gift">REGALO</h2>
+
+    <div class="accordion">
+      <details id="groomAcc">
+        <summary data-i18n="groomAccTitle">Cuenta del novio</summary>
+        <div class="acc-item">
+          <div class="acc-left">
+            <div class="acc-name" data-i18n="groomHolder">Titular (Novio)</div>
+            <div class="acc-no" id="groomAccText">국민 123-45-678901</div>
+          </div>
+          <button class="pill" type="button" data-copy-btn="국민 123-45-678901" data-i18n="copyBtn">Copiar</button>
+        </div>
+      </details>
+
+      <details id="brideAcc">
+        <summary data-i18n="brideAccTitle">Cuenta de la novia</summary>
+        <div class="acc-item">
+          <div class="acc-left">
+            <div class="acc-name" data-i18n="brideHolder">Titular (Novia)</div>
+            <div class="acc-no" id="brideAccText">국민 987-65-432109</div>
+          </div>
+          <button class="pill" type="button" data-copy-btn="국민 987-65-432109" data-i18n="copyBtn">Copiar</button>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="section thin-top closing">
+    <div class="closing-inner">
+      <p class="closing-text" data-i18n="closing1">
+        Muchas gracias por acompañarnos<br/>en este nuevo comienzo.
+      </p>
+
+      <p class="closing-text muted" data-i18n="closing2">
+        Guardaremos con cariño<br/>tus buenos deseos.
+      </p>
+
+      <p class="closing-sign" data-i18n="closingSign">Jacob y 성경</p>
+    </div>
+  </section>
+
+</div>
+
+<!-- Gallery Modal -->
+<div class="modal" id="imgModal" aria-hidden="true">
+  <button class="modal-close" id="closeBtn" type="button" aria-label="close">✕</button>
+
+  <button class="nav prev" id="prevBtn" type="button" aria-label="previous">‹</button>
+  <img id="imgView" alt="preview" />
+  <button class="nav next" id="nextBtn" type="button" aria-label="next">›</button>
+  <div class="tapzone left" id="tapPrev" aria-hidden="true"></div>
+  <div class="tapzone right" id="tapNext" aria-hidden="true"></div>
+</div>
+
+<div id="toast"></div>
+
+<script src="./script.js" defer></script>
+</body>
+</html>
