@@ -26,6 +26,12 @@ const WEDDING = {
   ],
 
   weekStartsOnSunday: true,
+
+    rsvpLink: "",
+
+    // ✅ Google Apps Script 웹앱 URL (배포 후 받은 exec URL)
+    rsvpEndpoint: "https://script.google.com/macros/s/AKfycbwnyWkqZDZ9EC4gZwy8GBVn0ALTE9uZ5WG2A4EcNqEen-JjXEfnMCebHuD-5OgAqS2yvA/exec",
+
 };
 
 /* =========================
@@ -73,6 +79,14 @@ const I18N = {
     cd_hours: "시",
     cd_mins: "분",
     cd_secs: "초",
+    rsvpModalTitle: "RSVP",
+    rsvpAttendPlaceholder: "참석 여부",
+    rsvpAttendYes: "참석",
+    rsvpAttendNo: "불참",
+    rsvpSubmit: "제출",
+    rsvpPrivacy: "연락처는 예식 안내 및 확인용으로만 사용 후 일정 기간 내 파기합니다.",
+    toastRsvpDone: "제출 완료! 감사합니다 💛",
+    toastRsvpFail: "저장 실패. 다시 시도해주세요.",    
   },
   en: {
     title: "Wedding Invitation",
@@ -115,6 +129,14 @@ const I18N = {
     cd_hours: "HOURS",
     cd_mins: "MIN",
     cd_secs: "SEC",
+    rsvpModalTitle: "RSVP",
+    rsvpAttendPlaceholder: "Attendance",
+    rsvpAttendYes: "Attending",
+    rsvpAttendNo: "Not attending",
+    rsvpSubmit: "Submit",
+    rsvpPrivacy: "Phone number is used only for wedding 안내/confirmation and will be deleted later.",
+    toastRsvpDone: "Submitted! Thank you 💛",
+    toastRsvpFail: "Save failed. Please try again.",
   },
   es: {
     title: "Invitación de boda",
@@ -157,6 +179,15 @@ const I18N = {
     cd_hours: "HORAS",
     cd_mins: "MIN",
     cd_secs: "SEG",
+    rsvpModalTitle: "CONFIRMACIÓN",
+    rsvpAttendPlaceholder: "Asistencia",
+    rsvpAttendYes: "Asistiré",
+    rsvpAttendNo: "No asistiré",
+    rsvpSubmit: "Enviar",
+    rsvpPrivacy: "El teléfono se usará solo para confirmar la asistencia y se eliminará más adelante.",
+    toastRsvpDone: "¡Enviado! Gracias 💛",
+    toastRsvpFail: "Error al guardar. Inténtalo de nuevo.",
+
   }
 };
 
@@ -700,14 +731,112 @@ function initVideo(){
 ========================= */
 function initRSVP(){
   const btn = $("#rsvpBtn");
-  if(!btn) return;
+  const modal = $("#rsvpModal");
+  const closeBtn = $("#rsvpCloseBtn");
+  const form = $("#rsvpForm");
+  const msg = $("#rsvpMsg");
+  const submitBtn = $("#rsvpSubmitBtn");
 
-  btn.addEventListener("click", ()=>{
-    if(!WEDDING.rsvpLink){
+  if(!btn || !modal || !closeBtn || !form) return;
+
+  const open = ()=>{
+    if(!WEDDING.rsvpEndpoint){
       toast(t("toastNeedRSVP"));
       return;
     }
-    window.open(WEDDING.rsvpLink, "_blank", "noreferrer");
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden","false");
+    document.body.style.overflow = "hidden";
+
+    // 첫 입력 포커스
+    const first = form.querySelector('input[name="name"]');
+    first?.focus();
+  };
+
+  const close = ()=>{
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden","true");
+    document.body.style.overflow = "";
+    if(msg){ msg.style.display = "none"; msg.textContent = ""; }
+  };
+
+  btn.addEventListener("click", open);
+  closeBtn.addEventListener("click", (e)=>{ e.stopPropagation(); close(); });
+
+  // 배경 클릭 닫기
+  modal.addEventListener("click", (e)=>{
+    if(e.target === modal) close();
+  });
+
+  // ESC 닫기
+  window.addEventListener("keydown", (e)=>{
+    if(!modal.classList.contains("open")) return;
+    if(e.key === "Escape") close();
+  });
+
+  form.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    if(!WEDDING.rsvpEndpoint){
+      toast(t("toastNeedRSVP"));
+      return;
+    }
+
+    const fd = new FormData(form);
+
+    // 허니팟: 봇이 채우면 무시
+    if((fd.get("website") || "").toString().trim() !== "") return;
+
+    const payload = {
+      name: (fd.get("name") || "").toString().trim(),
+      attend: (fd.get("attend") || "").toString().trim(),
+      count: Number(fd.get("count") || 1),
+      phone: (fd.get("phone") || "").toString().trim(),
+      memo: (fd.get("memo") || "").toString().trim(),
+      lang: currentLang,
+      userAgent: navigator.userAgent,
+      page: location.href
+    };
+
+    // 최소 검증
+    if(!payload.name || !payload.attend || !payload.count){
+      if(msg){
+        msg.textContent = "Please fill required fields.";
+        msg.style.display = "block";
+      }
+      return;
+    }
+
+    try{
+      submitBtn && (submitBtn.disabled = true);
+
+      const res = await fetch(WEDDING.rsvpEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json().catch(()=> ({}));
+
+      if(res.ok && data.ok){
+        form.reset();
+        toast(t("toastRsvpDone"));
+        close();
+      }else{
+        toast(t("toastRsvpFail"));
+        if(msg){
+          msg.textContent = t("toastRsvpFail");
+          msg.style.display = "block";
+        }
+      }
+    }catch(err){
+      toast(t("toastRsvpFail"));
+      if(msg){
+        msg.textContent = t("toastRsvpFail");
+        msg.style.display = "block";
+      }
+    }finally{
+      submitBtn && (submitBtn.disabled = false);
+    }
   });
 }
 

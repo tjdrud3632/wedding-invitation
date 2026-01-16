@@ -522,3 +522,54 @@ details[open] summary::after{ content:"▴"; }
   body{ font-size:16px; line-height:1.95; }
   .body{ line-height:1.9; }
 }
+
+/* RSVP modal card */
+.rsvp-card{
+  width:min(460px, 92vw);
+  background: var(--paper);
+  border-radius: 16px;
+  padding: 18px 16px 14px;
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 55px rgba(0,0,0,.45);
+  z-index: 2;
+}
+
+.rsvp-title{
+  margin: 4px 0 14px;
+  font-size: 18px;
+  letter-spacing: .10em;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+}
+
+#rsvpForm{
+  display: grid;
+  gap: 10px;
+}
+
+#rsvpForm input,
+#rsvpForm select,
+#rsvpForm textarea{
+  font-family: inherit;
+  font-size: 16px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.85);
+  color: var(--ink);
+}
+
+#rsvpForm textarea{ min-height: 92px; resize: vertical; }
+
+#rsvpMsg{
+  text-align: center;
+  margin: 6px 0 2px;
+}
+
+.rsvp-privacy{
+  margin: 0;
+  text-align: center;
+}
+
+.hp{ display:none !important; }
