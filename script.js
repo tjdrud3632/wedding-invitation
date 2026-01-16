@@ -85,6 +85,10 @@ const I18N = {
     rsvpAttendNo: "불참",
     rsvpSubmit: "제출",
     rsvpPrivacy: "연락처는 예식 안내 및 확인용으로만 사용 후 일정 기간 내 파기합니다.",
+    rsvpName: "이름",
+    rsvpCount: "인원 수",
+    rsvpPhone: "연락처(선택)",
+    rsvpMemo: "메모(선택)",
     toastRsvpDone: "제출 완료! 감사합니다 💛",
     toastRsvpFail: "저장 실패. 다시 시도해주세요.",    
   },
@@ -135,6 +139,10 @@ const I18N = {
     rsvpAttendNo: "Not attending",
     rsvpSubmit: "Submit",
     rsvpPrivacy: "Phone number is used only for wedding 안내/confirmation and will be deleted later.",
+    rsvpName: "Name",
+    rsvpCount: "Number of guests",
+    rsvpPhone: "Phone (optional)",
+    rsvpMemo: "Message (optional)",
     toastRsvpDone: "Submitted! Thank you 💛",
     toastRsvpFail: "Save failed. Please try again.",
   },
@@ -185,6 +193,10 @@ const I18N = {
     rsvpAttendNo: "No asistiré",
     rsvpSubmit: "Enviar",
     rsvpPrivacy: "El teléfono se usará solo para confirmar la asistencia y se eliminará más adelante.",
+    rsvpName: "Nombre",
+    rsvpCount: "Número de personas",
+    rsvpPhone: "Teléfono (opcional)",
+    rsvpMemo: "Mensaje (opcional)",
     toastRsvpDone: "¡Enviado! Gracias 💛",
     toastRsvpFail: "Error al guardar. Inténtalo de nuevo.",
 
@@ -359,6 +371,13 @@ function applyLanguage(lang){
     if(!key) return;
     if(el.tagName === "TITLE") return;
     el.innerHTML = t(key);
+  });
+
+  // ✅ placeholder i18n 처리 (RSVP 폼용)
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
+    const key = el.getAttribute("data-i18n-placeholder");
+    if(!key) return;
+    el.setAttribute("placeholder", t(key));
   });
 
   document.querySelectorAll(".lang-item[data-lang]").forEach(b=>{
@@ -772,6 +791,19 @@ function initRSVP(){
   window.addEventListener("keydown", (e)=>{
     if(!modal.classList.contains("open")) return;
     if(e.key === "Escape") close();
+  });
+  
+  const attendSelect = form.querySelector('select[name="attend"]');
+  const countInput = form.querySelector('input[name="count"]');
+
+  attendSelect.addEventListener("change", ()=>{
+    if(attendSelect.value === "no"){
+      countInput.value = 0;
+      countInput.disabled = true;
+    }else{
+      countInput.disabled = false;
+      if(Number(countInput.value) < 1) countInput.value = 1;
+    }
   });
 
   form.addEventListener("submit", async (e)=>{

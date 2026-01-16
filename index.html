@@ -214,9 +214,13 @@
 
   <div class="rsvp-card" role="dialog" aria-modal="true" aria-labelledby="rsvpTitle">
     <h3 id="rsvpTitle" class="rsvp-title" data-i18n="rsvpModalTitle">RSVP</h3>
-
     <form id="rsvpForm">
-      <input name="name" placeholder="이름" required />
+      <input
+        name="name"
+        required
+        data-i18n-placeholder="rsvpName"
+        placeholder="이름"
+      />
 
       <select name="attend" required>
         <option value="" data-i18n="rsvpAttendPlaceholder">참석 여부</option>
@@ -224,21 +228,37 @@
         <option value="no" data-i18n="rsvpAttendNo">불참</option>
       </select>
 
-      <input name="count" type="number" min="1" max="10" value="1" required />
+      <input
+        name="count"
+        type="number"
+        min="1"
+        max="10"
+        value="1"
+        data-i18n-placeholder="rsvpCount"
+      />
 
-      <input name="phone" placeholder="연락처(선택)" />
-      <textarea name="memo" placeholder="메모(선택)"></textarea>
+      <input
+        name="phone"
+        data-i18n-placeholder="rsvpPhone"
+        placeholder="연락처(선택)"
+      />
 
-      <!-- 스팸 방지용 허니팟 -->
+      <textarea
+        name="memo"
+        data-i18n-placeholder="rsvpMemo"
+        placeholder="메모(선택)"
+      ></textarea>
+
       <input name="website" class="hp" tabindex="-1" autocomplete="off" />
 
-      <button id="rsvpSubmitBtn" class="cta" type="submit" data-i18n="rsvpSubmit">제출</button>
-      <p class="small muted rsvp-privacy" data-i18n="rsvpPrivacy">
-        연락처는 예식 안내 및 확인용으로만 사용 후 일정 기간 내 파기합니다.
-      </p>
+      <button id="rsvpSubmitBtn" class="cta" type="submit" data-i18n="rsvpSubmit">
+        제출
+      </button>
 
+      <p class="small muted rsvp-privacy" data-i18n="rsvpPrivacy"></p>
       <p id="rsvpMsg" class="small" style="display:none;"></p>
     </form>
+
   </div>
 </div>
 

@@ -414,17 +414,33 @@ details[open] summary::after{ content:"▴"; }
 .acc-name{ font-size:13px; margin-bottom:6px; opacity:.9; }
 .acc-no{ font-size:13px; color:var(--muted); }
 
-/* Modal */
+/* Modal (patched for iOS safe-area + scroll) */
 .modal{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.78);
   display:none;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
+
+  /* ✅ iOS에서 상단/하단 안전영역 반영 */
+  padding:
+    max(18px, env(safe-area-inset-top))
+    max(18px, env(safe-area-inset-right))
+    max(18px, env(safe-area-inset-bottom))
+    max(18px, env(safe-area-inset-left));
+
   z-index:9998;
+
+  /* ✅ 내용이 길면 모달 자체가 스크롤 */
+  overflow:auto;
+  -webkit-overflow-scrolling: touch;
+
+  /* ✅ 중앙정렬(세로는 iOS에서 깨질 수 있어 flex-start가 안전) */
+  align-items:flex-start;
+  justify-content:center;
 }
+
+.modal.open{ display:flex; }
+
 .modal.open{ display:flex; }
 
 .modal-close{
@@ -525,13 +541,13 @@ details[open] summary::after{ content:"▴"; }
 
 /* RSVP modal card */
 .rsvp-card{
-  width:min(460px, 92vw);
-  background: var(--paper);
-  border-radius: 16px;
-  padding: 18px 16px 14px;
-  border: 1px solid var(--line);
-  box-shadow: 0 18px 55px rgba(0,0,0,.45);
-  z-index: 2;
+  /* ✅ iOS에서 높이 초과 시 카드 내부 스크롤 */
+  max-height: calc(100svh - 48px);
+  overflow:auto;
+  -webkit-overflow-scrolling: touch;
+
+  /* ✅ 위쪽 여백 조금 주면 더 안정 */
+  margin: 12px 0;
 }
 
 .rsvp-title{
