@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="./style.css?v=2" />
+  <link rel="stylesheet" href="./style.css?v=3" />
 </head>
 
 <body>
@@ -109,7 +109,7 @@
       <div class="cd-box"><div class="cd-label" id="lblMins">MIN</div><div class="cd-num" id="cdMins">--</div></div>
       <div class="cd-box"><div class="cd-label" id="lblSecs">SEC</div><div class="cd-num" id="cdSecs">--</div></div>
     </div>
-    <p class="dday" id="ddayText" data-i18n="ddayText">Faltan D- -- días</p>
+    <p class="dday" id="ddayText" data-i18n="ddayText">Faltan -- días</p>
   </section>
 
   <!-- GALLERY -->
@@ -231,7 +231,7 @@
       <input
         name="count"
         type="number"
-        min="1"
+        min="0"
         max="10"
         value="1"
         data-i18n-placeholder="rsvpCount"
@@ -275,6 +275,6 @@
 
 <div id="toast"></div>
 
-<script src="./script.js?v=2" defer></script>
+<script src="./script.js?v=3" defer></script>
 </body>
 </html>

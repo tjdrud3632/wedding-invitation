@@ -7,7 +7,8 @@ const WEDDING = {
   ceremony: { address: "Carretera Subida SantuarioS N, 46400 Cullera, Valencia, España" },
   reception: { address: "Av. Joanot Martorell, 16, 46408 Faro de Cullera, Valencia, España" },
 
-  rsvpLink: "",
+  // ✅ Google Apps Script 웹앱 URL (배포 후 받은 exec URL)
+  rsvpEndpoint: "https://script.google.com/macros/s/AKfycbwnyWkqZDZ9EC4gZwy8GBVn0ALTE9uZ5WG2A4EcNqEen-JjXEfnMCebHuD-5OgAqS2yvA/exec",
 
   bgmSrc: "./assets/audio/A Thousand Years.mp3",
   videoSrc: "./assets/video/wedding.mp4",
@@ -26,12 +27,6 @@ const WEDDING = {
   ],
 
   weekStartsOnSunday: true,
-
-    rsvpLink: "",
-
-    // ✅ Google Apps Script 웹앱 URL (배포 후 받은 exec URL)
-    rsvpEndpoint: "https://script.google.com/macros/s/AKfycbwnyWkqZDZ9EC4gZwy8GBVn0ALTE9uZ5WG2A4EcNqEen-JjXEfnMCebHuD-5OgAqS2yvA/exec",
-
 };
 
 /* =========================
@@ -39,26 +34,26 @@ const WEDDING = {
 ========================= */
 const I18N = {
   ko: {
-    title: "Wedding Invitation",
-    invitationTitle: "Wedding Invitation",
+    title: "결혼식 초대장",
+    invitationTitle: "결혼식 초대장",
     invitationBody:
       `서로를 향해 긴 시간을 건너온 두 사람,<br/>
        멀리 떨어져 있어도 이어진 마음으로 여기까지 왔습니다.<br/>
        이 소중한 순간을 함께 나누고 축복해 주신다면<br/>
        더할 나위 없이 감사하겠습니다.`,
     ceremony: "예식",
-    reception: "피로연(2부)",
+    reception: "피로연",
     calendar: "CALENDAR",
     dday: "D-DAY",
-    ddayText: "결혼식까지 D- --",
+    ddayText: "결혼식까지 --일",
     gallery: "GALLERY",
     galleryHint: "사진을 누르면 크게 볼 수 있어요. (좌/우 탭 또는 스와이프)",
     galleryMore: "더 보기",
     video: "VIDEO",
     location: "LOCATION",
     rsvp: "RSVP",
-    rsvpHint: "참석 여부를 알려주시면 준비에 큰 도움이 됩니다.",
-    rsvpBtn: "참석여부 전달하기",
+    rsvpHint: "참석 여부를 미리 알려주시면 감사하겠습니다.",
+    rsvpBtn: "참석 여부 전달하기",
     gift: "GIFT",
     groomAccTitle: "신랑측 계좌번호",
     brideAccTitle: "신부측 계좌번호",
@@ -69,8 +64,8 @@ const I18N = {
     closing2: "따뜻한 마음 오래도록 간직하며<br/>서로에게 좋은 부부가 되겠습니다.",
     closingSign: "Jacob & 성경",
     toastCopy: "복사되었습니다",
-    toastCopyFail: "복사 실패",
-    toastNeedRSVP: "RSVP 링크를 설정해줘!",
+    toastCopyFail: "복사에 실패했어요",
+    toastNeedRSVP: "RSVP 설정이 아직 완료되지 않았어요.",
     toastBgmOn: "배경음악 ON",
     toastBgmOff: "배경음악 OFF",
     toastBgmNeedTap: "iOS에서 재생이 제한될 수 있어요. 다시 눌러주세요.",
@@ -79,39 +74,43 @@ const I18N = {
     cd_hours: "시",
     cd_mins: "분",
     cd_secs: "초",
+
     rsvpModalTitle: "RSVP",
     rsvpAttendPlaceholder: "참석 여부",
     rsvpAttendYes: "참석",
     rsvpAttendNo: "불참",
     rsvpSubmit: "제출",
-    rsvpPrivacy: "연락처는 예식 안내 및 확인용으로만 사용 후 일정 기간 내 파기합니다.",
+    rsvpSubmitting: "전송 중...",
+    rsvpPrivacy: "연락처는 예식 안내 및 확인용으로만 사용 후, 일정 기간 내 파기됩니다.",
     rsvpName: "이름",
     rsvpCount: "인원 수",
     rsvpPhone: "연락처(선택)",
     rsvpMemo: "메모(선택)",
     toastRsvpDone: "제출 완료! 감사합니다 💛",
-    toastRsvpFail: "저장 실패. 다시 시도해주세요.",    
+    toastRsvpFail: "저장에 실패했어요. 다시 시도해주세요.",
+    toastRsvpRequired: "필수 항목을 입력해주세요.",
   },
+
   en: {
     title: "Wedding Invitation",
     invitationTitle: "Wedding Invitation",
     invitationBody:
-      `Two hearts that crossed time and distance,<br/>
-       have arrived here holding onto one another.<br/>
+      `Two hearts that crossed time and distance<br/>
+       have finally arrived here, hand in hand.<br/>
        We would be truly grateful<br/>
-       if you could celebrate this precious moment with us.`,
+       if you could celebrate this special moment with us.`,
     ceremony: "Ceremony",
-    reception: "Reception (After party)",
+    reception: "Reception (After-party)",
     calendar: "CALENDAR",
-    dday: "D-DAY",
-    ddayText: "D- -- days",
+    dday: "COUNTDOWN",
+    ddayText: "-- days to go",
     gallery: "GALLERY",
-    galleryHint: "Tap a photo to view larger. (Tap sides / swipe)",
+    galleryHint: "Tap a photo to view it larger. (Tap sides / swipe)",
     galleryMore: "Load more",
     video: "VIDEO",
     location: "LOCATION",
     rsvp: "RSVP",
-    rsvpHint: "Please let us know if you can attend.",
+    rsvpHint: "Kindly let us know whether you’ll be able to attend.",
     rsvpBtn: "Send RSVP",
     gift: "GIFT",
     groomAccTitle: "Groom's account",
@@ -120,11 +119,11 @@ const I18N = {
     brideHolder: "Account holder (Bride)",
     copyBtn: "Copy",
     closing1: "Thank you for being part of our new beginning.",
-    closing2: "With love and gratitude, we will cherish your warm wishes.",
+    closing2: "With love and gratitude, we’ll cherish your warm wishes.",
     closingSign: "Jacob & 성경",
     toastCopy: "Copied",
     toastCopyFail: "Copy failed",
-    toastNeedRSVP: "Please set the RSVP link!",
+    toastNeedRSVP: "RSVP isn’t available yet.",
     toastBgmOn: "BGM ON",
     toastBgmOff: "BGM OFF",
     toastBgmNeedTap: "Playback may be restricted on iOS. Tap again.",
@@ -133,32 +132,36 @@ const I18N = {
     cd_hours: "HOURS",
     cd_mins: "MIN",
     cd_secs: "SEC",
+
     rsvpModalTitle: "RSVP",
     rsvpAttendPlaceholder: "Attendance",
     rsvpAttendYes: "Attending",
     rsvpAttendNo: "Not attending",
     rsvpSubmit: "Submit",
-    rsvpPrivacy: "Phone number is used only for wedding 안내/confirmation and will be deleted later.",
+    rsvpSubmitting: "Sending...",
+    rsvpPrivacy: "Your phone number will be used only for confirmation and will be deleted later.",
     rsvpName: "Name",
     rsvpCount: "Number of guests",
     rsvpPhone: "Phone (optional)",
     rsvpMemo: "Message (optional)",
     toastRsvpDone: "Submitted! Thank you 💛",
     toastRsvpFail: "Save failed. Please try again.",
+    toastRsvpRequired: "Please fill in the required fields.",
   },
+
   es: {
     title: "Invitación de boda",
     invitationTitle: "Invitación de boda",
     invitationBody:
-      `Dos corazones que han cruzado el tiempo y la distancia,<br/>
+      `Dos corazones que han cruzado el tiempo y la distancia<br/>
        han llegado hasta aquí unidos.<br/>
        Nos haría mucha ilusión<br/>
-       que compartieras y celebraras este momento con nosotros.`,
+       que compartieras este momento tan especial con nosotros.`,
     ceremony: "Ceremonia",
     reception: "Recepción",
     calendar: "CALENDARIO",
     dday: "CUENTA ATRÁS",
-    ddayText: "Faltan D- -- días",
+    ddayText: "Faltan -- días",
     gallery: "GALERÍA",
     galleryHint: "Toca una foto para verla en grande. (Toca los lados / desliza)",
     galleryMore: "Ver más",
@@ -178,7 +181,7 @@ const I18N = {
     closingSign: "Jacob y 성경",
     toastCopy: "Copiado",
     toastCopyFail: "Error al copiar",
-    toastNeedRSVP: "¡Configura el enlace de confirmación!",
+    toastNeedRSVP: "La confirmación aún no está disponible.",
     toastBgmOn: "Música ON",
     toastBgmOff: "Música OFF",
     toastBgmNeedTap: "En iOS puede estar restringido. Toca otra vez.",
@@ -187,11 +190,13 @@ const I18N = {
     cd_hours: "HORAS",
     cd_mins: "MIN",
     cd_secs: "SEG",
+
     rsvpModalTitle: "CONFIRMACIÓN",
     rsvpAttendPlaceholder: "Asistencia",
     rsvpAttendYes: "Asistiré",
-    rsvpAttendNo: "No asistiré",
+    rsvpAttendNo: "No podré asistir",
     rsvpSubmit: "Enviar",
+    rsvpSubmitting: "Enviando...",
     rsvpPrivacy: "El teléfono se usará solo para confirmar la asistencia y se eliminará más adelante.",
     rsvpName: "Nombre",
     rsvpCount: "Número de personas",
@@ -199,7 +204,7 @@ const I18N = {
     rsvpMemo: "Mensaje (opcional)",
     toastRsvpDone: "¡Enviado! Gracias 💛",
     toastRsvpFail: "Error al guardar. Inténtalo de nuevo.",
-
+    toastRsvpRequired: "Por favor, completa los campos obligatorios.",
   }
 };
 
@@ -275,7 +280,7 @@ function formatWeddingDate(){
 }
 
 /* =========================
-   2) 스페인어 요일/카운트다운 라벨
+   2) 요일/카운트다운 라벨
 ========================= */
 function renderCalendarHead(){
   const head = $("#calHead");
@@ -393,13 +398,13 @@ function applyLanguage(lang){
   renderCalendarHead();
   renderCountdownLabels();
   applyAccountVisibility();
-  initCalendar(); // ✅ 캘린더 상단 날짜/렌더 재갱신
+  initCalendar();
 }
 
 function initLanguageSwitcher(){
   const langBtn = $("#langBtn");
   const langMenu = $("#langMenu");
-  if(langMenu) langMenu.inert = true; // ✅ 닫힌 상태에서 포커스 방지
+  if(langMenu) langMenu.inert = true;
 
   const toggleMenu = (force) => {
     if(!langMenu) return;
@@ -409,7 +414,6 @@ function initLanguageSwitcher(){
     langMenu.setAttribute("aria-hidden", willOpen ? "false" : "true");
     langMenu.inert = !willOpen;
 
-    // ✅ 닫힐 때 내부 포커스가 남아 aria 경고 나는 것 방지
     if(!willOpen){
       if(document.activeElement && langMenu.contains(document.activeElement)){
         langBtn?.focus();
@@ -483,9 +487,9 @@ function initCountdown(){
     if(elS) elS.textContent = pad2(secs);
 
     if(elText){
-      if(currentLang === "ko") elText.textContent = `결혼식까지 D-${days}`;
-      else if(currentLang === "en") elText.textContent = `D-${days} days`;
-      else elText.textContent = `Faltan D-${days} días`;
+      if(currentLang === "ko") elText.textContent = `결혼식까지 D-${days}일`;
+      else if(currentLang === "en") elText.textContent = `${days} days to go`;
+      else elText.textContent = `Faltan ${days} días`;
     }
   }
 
@@ -495,8 +499,6 @@ function initCountdown(){
 
 /* =========================
    Calendar
-   - KO: 2026.05.02
-   - EN/ES: 02.05.2026
 ========================= */
 function initCalendar(){
   const grid = $("#calGrid");
@@ -625,20 +627,13 @@ function initGallery(){
   tapPrev?.addEventListener("click", (e)=>{ e.stopPropagation(); prev(); });
   tapNext?.addEventListener("click", (e)=>{ e.stopPropagation(); next(); });
 
-// ✅ 배경(오버레이) 클릭만 닫기: modal 자체가 아니라 "modal 배경"을 클릭했을 때만
-modal.addEventListener("click", (e)=>{
-  if(e.target === modal) close();
-});
+  modal.addEventListener("click", (e)=>{
+    if(e.target === modal) close();
+  });
 
-// ✅ 내부 요소 클릭은 닫히지 않게
-imgView.addEventListener("click", (e)=> e.stopPropagation());
-prevBtn?.addEventListener("click", (e)=>{ e.stopPropagation(); prev(); });
-nextBtn?.addEventListener("click", (e)=>{ e.stopPropagation(); next(); });
-tapPrev?.addEventListener("click", (e)=>{ e.stopPropagation(); prev(); });
-tapNext?.addEventListener("click", (e)=>{ e.stopPropagation(); next(); });
+  imgView.addEventListener("click", (e)=> e.stopPropagation());
 
-// ✅ 닫기 버튼
-closeBtn?.addEventListener("click", (e)=>{ e.stopPropagation(); close(); });
+  closeBtn?.addEventListener("click", (e)=>{ e.stopPropagation(); close(); });
 
   window.addEventListener("keydown", (e)=>{
     if(!modal.classList.contains("open")) return;
@@ -664,7 +659,7 @@ closeBtn?.addEventListener("click", (e)=>{ e.stopPropagation(); close(); });
 }
 
 /* =========================
-   BGM (default ON attempt)
+   BGM
 ========================= */
 function initBGM(){
   const btn = $("#bgmToggle");
@@ -756,58 +751,80 @@ function initRSVP(){
   const msg = $("#rsvpMsg");
   const submitBtn = $("#rsvpSubmitBtn");
 
-  if(!btn || !modal || !closeBtn || !form) return;
+  if(!btn || !modal || !closeBtn || !form || !submitBtn) return;
 
+  const attendSelect = form.querySelector('select[name="attend"]');
+  const countInput  = form.querySelector('input[name="count"]');
+
+  /* ---------- open / close ---------- */
   const open = ()=>{
     if(!WEDDING.rsvpEndpoint){
       toast(t("toastNeedRSVP"));
       return;
     }
+
     modal.classList.add("open");
     modal.setAttribute("aria-hidden","false");
     document.body.style.overflow = "hidden";
 
     // 첫 입력 포커스
-    const first = form.querySelector('input[name="name"]');
-    first?.focus();
+    form.querySelector('input[name="name"]')?.focus();
+
+    // 참석 여부에 따른 인원 필드 정리
+    if(attendSelect && countInput){
+      if(attendSelect.value === "no"){
+        countInput.value = "0";
+        countInput.disabled = true;
+      }else{
+        countInput.disabled = false;
+        if(Number(countInput.value) < 1) countInput.value = "1";
+      }
+    }
   };
 
   const close = ()=>{
     modal.classList.remove("open");
     modal.setAttribute("aria-hidden","true");
     document.body.style.overflow = "";
-    if(msg){ msg.style.display = "none"; msg.textContent = ""; }
+    if(msg){
+      msg.style.display = "none";
+      msg.textContent = "";
+    }
   };
 
   btn.addEventListener("click", open);
-  closeBtn.addEventListener("click", (e)=>{ e.stopPropagation(); close(); });
+  closeBtn.addEventListener("click", (e)=>{
+    e.stopPropagation();
+    close();
+  });
 
-  // 배경 클릭 닫기
   modal.addEventListener("click", (e)=>{
     if(e.target === modal) close();
   });
 
-  // ESC 닫기
   window.addEventListener("keydown", (e)=>{
-    if(!modal.classList.contains("open")) return;
-    if(e.key === "Escape") close();
-  });
-  
-  const attendSelect = form.querySelector('select[name="attend"]');
-  const countInput = form.querySelector('input[name="count"]');
-
-  attendSelect.addEventListener("change", ()=>{
-    if(attendSelect.value === "no"){
-      countInput.value = 0;
-      countInput.disabled = true;
-    }else{
-      countInput.disabled = false;
-      if(Number(countInput.value) < 1) countInput.value = 1;
+    if(e.key === "Escape" && modal.classList.contains("open")){
+      close();
     }
   });
 
+  /* ---------- attend / count sync ---------- */
+  if(attendSelect && countInput){
+    attendSelect.addEventListener("change", ()=>{
+      if(attendSelect.value === "no"){
+        countInput.value = "0";
+        countInput.disabled = true;
+      }else{
+        countInput.disabled = false;
+        if(Number(countInput.value) < 1) countInput.value = "1";
+      }
+    });
+  }
+
+  /* ---------- submit ---------- */
   form.addEventListener("submit", async (e)=>{
     e.preventDefault();
+
     if(!WEDDING.rsvpEndpoint){
       toast(t("toastNeedRSVP"));
       return;
@@ -815,50 +832,75 @@ function initRSVP(){
 
     const fd = new FormData(form);
 
-    // 허니팟: 봇이 채우면 무시
-    if((fd.get("website") || "").toString().trim() !== "") return;
+    /* UX: 즉시 반응 */
+    const originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = t("rsvpSubmitting");
+
+    /* honeypot */
+    if((fd.get("website") || "").toString().trim() !== ""){
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+      return;
+    }
+
+    const name   = (fd.get("name") || "").toString().trim();
+    const attend = (fd.get("attend") || "").toString().trim();
+    const phone  = (fd.get("phone") || "").toString().trim();
+    const memo   = (fd.get("memo") || "").toString().trim();
+
+    const rawCount = Number(fd.get("count"));
+    const count =
+      attend === "no"
+        ? 0
+        : (Number.isFinite(rawCount) && rawCount > 0 ? rawCount : 1);
+
+    /* validation */
+    if(!name || !attend || (attend !== "no" && count < 1)){
+      toast(t("toastRsvpRequired"));
+      if(msg){
+        msg.textContent = t("toastRsvpRequired");
+        msg.style.display = "block";
+      }
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+      return;
+    }
 
     const payload = {
-      name: (fd.get("name") || "").toString().trim(),
-      attend: (fd.get("attend") || "").toString().trim(),
-      count: Number(fd.get("count") || 1),
-      phone: (fd.get("phone") || "").toString().trim(),
-      memo: (fd.get("memo") || "").toString().trim(),
+      name,
+      attend,
+      count,
+      phone,
+      memo,
       lang: currentLang,
       userAgent: navigator.userAgent,
       page: location.href
     };
 
-    // 최소 검증
-    if(!payload.name || !payload.attend || !payload.count){
-      if(msg){
-        msg.textContent = "Please fill required fields.";
-        msg.style.display = "block";
-      }
-      return;
-    }
-
     try{
-      submitBtn && (submitBtn.disabled = true);
+      /* timeout 10s */
+      const controller = new AbortController();
+      const timer = setTimeout(()=> controller.abort(), 10000);
 
       const res = await fetch(WEDDING.rsvpEndpoint, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload),
+        signal: controller.signal
       });
 
-      const data = await res.json().catch(()=> ({}));
+      clearTimeout(timer);
+
+      let data = {};
+      try{ data = await res.json(); }catch{}
 
       if(res.ok && data.ok){
         form.reset();
         toast(t("toastRsvpDone"));
         close();
       }else{
-        toast(t("toastRsvpFail"));
-        if(msg){
-          msg.textContent = t("toastRsvpFail");
-          msg.style.display = "block";
-        }
+        throw new Error("server error");
       }
     }catch(err){
       toast(t("toastRsvpFail"));
@@ -867,16 +909,18 @@ function initRSVP(){
         msg.style.display = "block";
       }
     }finally{
-      submitBtn && (submitBtn.disabled = false);
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
     }
   });
 }
 
+
 /* =========================
-   Boot (중복 호출 제거)
+   Boot
 ========================= */
 document.addEventListener("DOMContentLoaded", ()=>{
-  initLanguageSwitcher();   // ✅ 여기서 applyLanguage가 캘린더/라벨/계좌까지 갱신
+  initLanguageSwitcher();
   initCopyButtons();
   initMapEmbed();
   initCountdown();
