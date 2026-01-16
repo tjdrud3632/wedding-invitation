@@ -603,6 +603,8 @@ details[open] summary::after{ content:"▴"; }
 #rsvpForm input,
 #rsvpForm select,
 #rsvpForm textarea{
+  width: 100%;
+  box-sizing: border-box;
   font-family: inherit;
   font-size: 16px;
   padding: 12px 14px;
@@ -611,6 +613,11 @@ details[open] summary::after{ content:"▴"; }
   background: rgba(255,255,255,.92);
   color: var(--ink);
   outline: none;
+}
+
+#rsvpForm button{
+  width: 100%;
+  box-sizing: border-box;
 }
 
 #rsvpForm textarea{ min-height: 92px; resize: vertical; }
