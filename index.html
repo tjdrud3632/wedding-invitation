@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./style.css?v=1" />
 </head>
 
 <body>
@@ -209,8 +209,8 @@
 </div>
 
 <!-- RSVP Modal -->
-<div class="modal" id="rsvpModal" aria-hidden="true">
-  <button class="modal-close" id="rsvpCloseBtn" type="button" aria-label="close">✕</button>
+<div class="rsvp-overlay" id="rsvpModal" aria-hidden="true">
+  <button class="rsvp-close" id="rsvpCloseBtn" type="button" aria-label="close">✕</button>
 
   <div class="rsvp-card" role="dialog" aria-modal="true" aria-labelledby="rsvpTitle">
     <h3 id="rsvpTitle" class="rsvp-title" data-i18n="rsvpModalTitle">RSVP</h3>
@@ -275,6 +275,6 @@
 
 <div id="toast"></div>
 
-<script src="./script.js" defer></script>
+<script src="./script.js?v=1" defer></script>
 </body>
 </html>
