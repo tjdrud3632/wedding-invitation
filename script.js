@@ -34,8 +34,8 @@ const WEDDING = {
 ========================= */
 const I18N = {
   ko: {
-    title: "결혼식 초대장",
-    invitationTitle: "결혼식 초대장",
+    title: "Wedding Invitation",
+    invitationTitle: "Wedding Invitation",
     invitationBody:
       `서로를 향해 긴 시간을 건너온 두 사람,<br/>
        멀리 떨어져 있어도 이어진 마음으로 여기까지 왔습니다.<br/>
