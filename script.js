@@ -7,11 +7,11 @@ const WEDDING = {
   ceremony: { address: "Carretera Subida SantuarioS N, 46400 Cullera, Valencia, España" },
   reception: { address: "Av. Joanot Martorell, 16, 46408 Faro de Cullera, Valencia, España" },
 
-  // ✅ Google Apps Script 웹앱 URL (배포 후 받은 exec URL)
+  // Google Apps Script 웹앱 URL
   rsvpEndpoint: "https://script.google.com/macros/s/AKfycbwnyWkqZDZ9EC4gZwy8GBVn0ALTE9uZ5WG2A4EcNqEen-JjXEfnMCebHuD-5OgAqS2yvA/exec",
 
   bgmSrc: "./assets/audio/A Thousand Years.mp3",
-  videoSrc: "./assets/video/wedding.mp4",
+  videoSrc: "./assets/video/0502.mp4",
 
   gallery: [
     "./assets/images/gallery-01.JPG",
@@ -305,9 +305,9 @@ function renderCountdownLabels(){
 }
 
 /* =========================
-   3) 지도: 정확도 개선 (KEY 있으면 v1/search)
+   3) 지도
 ========================= */
-const GOOGLE_MAPS_EMBED_KEY = ""; // ✅ 있으면 여기에 넣기 (없으면 자동 fallback)
+const GOOGLE_MAPS_EMBED_KEY = "";
 
 function buildEmbedURL(address){
   const q = encodeURIComponent(address);
@@ -330,9 +330,6 @@ function initMapEmbed(){
   if(receptionMap) receptionMap.src = buildEmbedURL(WEDDING.reception.address);
 }
 
-/* =========================
-   invitation addresses
-========================= */
 function applyInvitationAddresses(){
   const c = $("#metaCeremonyAddr");
   const r = $("#metaReceptionAddr");
@@ -342,8 +339,6 @@ function applyInvitationAddresses(){
 
 /* =========================
    5) 계좌 노출 조건
-   - EN/ES: groom만
-   - KO: bride만
 ========================= */
 function applyAccountVisibility(){
   const groom = $("#groomAcc");
@@ -378,7 +373,6 @@ function applyLanguage(lang){
     el.innerHTML = t(key);
   });
 
-  // ✅ placeholder i18n 처리 (RSVP 폼용)
   document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
     const key = el.getAttribute("data-i18n-placeholder");
     if(!key) return;
@@ -392,7 +386,6 @@ function applyLanguage(lang){
   const moreBtn = $("#galleryMore");
   if(moreBtn) moreBtn.textContent = t("galleryMore");
 
-  // ✅ 언어별 UI 갱신
   formatWeddingDate();
   applyInvitationAddresses();
   renderCalendarHead();
@@ -632,7 +625,6 @@ function initGallery(){
   });
 
   imgView.addEventListener("click", (e)=> e.stopPropagation());
-
   closeBtn?.addEventListener("click", (e)=>{ e.stopPropagation(); close(); });
 
   window.addEventListener("keydown", (e)=>{
@@ -726,18 +718,33 @@ function initBGM(){
 }
 
 /* =========================
-   Video
+   Video (모바일 안정화)
 ========================= */
 function initVideo(){
   const v = $("#weddingVideo");
   if(!v) return;
 
-  if(WEDDING.videoSrc){
-    v.src = WEDDING.videoSrc;
-  }else{
+  if(!WEDDING.videoSrc){
     v.style.display = "none";
+    return;
   }
+
+  v.setAttribute("playsinline", "");
+  v.setAttribute("webkit-playsinline", "");
   v.playsInline = true;
+
+  // src 설정 후 load() 호출 (모바일에서 “안 뜸” 완화)
+  v.src = WEDDING.videoSrc;
+  v.load();
+
+  // (선택) iOS에서 가끔 첫 재생이 막힐 때 대비: 사용자 탭 이후 다시 load
+  const retryLoadOnce = ()=>{
+    try { v.load(); } catch {}
+    window.removeEventListener("touchstart", retryLoadOnce);
+    window.removeEventListener("pointerdown", retryLoadOnce);
+  };
+  window.addEventListener("touchstart", retryLoadOnce, { once:true });
+  window.addEventListener("pointerdown", retryLoadOnce, { once:true });
 }
 
 /* =========================
@@ -756,7 +763,6 @@ function initRSVP(){
   const attendSelect = form.querySelector('select[name="attend"]');
   const countInput  = form.querySelector('input[name="count"]');
 
-  /* ---------- open / close ---------- */
   const open = ()=>{
     if(!WEDDING.rsvpEndpoint){
       toast(t("toastNeedRSVP"));
@@ -767,10 +773,14 @@ function initRSVP(){
     modal.setAttribute("aria-hidden","false");
     document.body.style.overflow = "hidden";
 
-    // 첫 입력 포커스
+    // 메시지 초기화
+    if(msg){
+      msg.style.display = "none";
+      msg.textContent = "";
+    }
+
     form.querySelector('input[name="name"]')?.focus();
 
-    // 참석 여부에 따른 인원 필드 정리
     if(attendSelect && countInput){
       if(attendSelect.value === "no"){
         countInput.value = "0";
@@ -808,7 +818,6 @@ function initRSVP(){
     }
   });
 
-  /* ---------- attend / count sync ---------- */
   if(attendSelect && countInput){
     attendSelect.addEventListener("change", ()=>{
       if(attendSelect.value === "no"){
@@ -821,7 +830,6 @@ function initRSVP(){
     });
   }
 
-  /* ---------- submit ---------- */
   form.addEventListener("submit", async (e)=>{
     e.preventDefault();
 
@@ -832,12 +840,11 @@ function initRSVP(){
 
     const fd = new FormData(form);
 
-    /* UX: 즉시 반응 */
     const originalText = submitBtn.textContent;
     submitBtn.disabled = true;
     submitBtn.textContent = t("rsvpSubmitting");
 
-    /* honeypot */
+    // honeypot
     if((fd.get("website") || "").toString().trim() !== ""){
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;
@@ -855,7 +862,6 @@ function initRSVP(){
         ? 0
         : (Number.isFinite(rawCount) && rawCount > 0 ? rawCount : 1);
 
-    /* validation */
     if(!name || !attend || (attend !== "no" && count < 1)){
       toast(t("toastRsvpRequired"));
       if(msg){
@@ -879,7 +885,6 @@ function initRSVP(){
     };
 
     try{
-      /* timeout 10s */
       const controller = new AbortController();
       const timer = setTimeout(()=> controller.abort(), 10000);
 
@@ -914,7 +919,6 @@ function initRSVP(){
     }
   });
 }
-
 
 /* =========================
    Boot

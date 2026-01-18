@@ -3,12 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+
   <title data-i18n="title">Invitación de boda</title>
 
   <!-- Open Graph (WhatsApp / SNS preview) -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://noscasamosjs.com/" />
-
   <meta property="og:type" content="website" />
   <meta property="og:title" content="¡Nos casamos!" />
   <meta property="og:description" content="Jacob y 성경 · 2 de mayo de 2026. Nos encantaría compartir este día contigo." />
@@ -21,10 +19,16 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Jacob & 성경 웨딩 사진" />
 
+  <!-- (권장) 트위터 카드도 함께 -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="¡Nos casamos!" />
+  <meta name="twitter:description" content="Jacob y 성경 · 2 de mayo de 2026. Nos encantaría compartir este día contigo." />
+  <meta name="twitter:image" content="https://noscasamosjs.com/assets/images/og.jpg" />
+
   <!-- Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="./style.css?v=3" />
 </head>
@@ -39,9 +43,9 @@
 
     <div class="hero-content">
 
-      <!-- ✅ TOP RIGHT -->
+      <!-- TOP RIGHT -->
       <div class="hero-topbar">
-        <!-- Language: globe + dropdown -->
+        <!-- Language -->
         <div class="lang-wrap">
           <button class="icon-btn" id="langBtn" type="button" aria-label="Language">🌐</button>
           <div class="lang-menu" id="langMenu" aria-hidden="true">
@@ -51,7 +55,7 @@
           </div>
         </div>
 
-        <!-- BGM: icon + state -->
+        <!-- BGM -->
         <div class="bgm-wrap">
           <button id="bgmToggle" class="icon-btn" type="button" aria-label="BGM" aria-pressed="false">♪</button>
           <span id="bgmState" class="mini-state">OFF</span>
@@ -81,7 +85,7 @@
       안성경
     </div>
 
-    <!-- ✅ INV META -->
+    <!-- INV META -->
     <div class="inv-meta" id="weddingMeta" aria-label="wedding info">
       <div class="inv-block">
         <div class="inv-date" id="metaDate"></div>
@@ -112,9 +116,7 @@
     <div class="date-big" id="dateBig"></div>
 
     <div class="calendar" aria-label="calendar">
-      <div class="cal-head" id="calHead">
-        <!-- ✅ JS에서 언어별로 자동 렌더 -->
-      </div>
+      <div class="cal-head" id="calHead"></div>
       <div class="cal-grid" id="calGrid"></div>
     </div>
 
@@ -140,7 +142,8 @@
   <section class="section thin-top">
     <h2 class="section-title" data-i18n="video">VÍDEO</h2>
     <div class="video-wrap">
-      <video id="weddingVideo" controls playsinline preload="metadata"></video>
+      <!-- iOS 안정성: webkit-playsinline 추가 -->
+      <video id="weddingVideo" controls playsinline webkit-playsinline preload="metadata"></video>
     </div>
   </section>
 
@@ -230,13 +233,9 @@
 
   <div class="rsvp-card" role="dialog" aria-modal="true" aria-labelledby="rsvpTitle">
     <h3 id="rsvpTitle" class="rsvp-title" data-i18n="rsvpModalTitle">RSVP</h3>
+
     <form id="rsvpForm">
-      <input
-        name="name"
-        required
-        data-i18n-placeholder="rsvpName"
-        placeholder="이름"
-      />
+      <input name="name" required data-i18n-placeholder="rsvpName" placeholder="이름" />
 
       <select name="attend" required>
         <option value="" data-i18n="rsvpAttendPlaceholder">참석 여부</option>
@@ -244,37 +243,19 @@
         <option value="no" data-i18n="rsvpAttendNo">불참</option>
       </select>
 
-      <input
-        name="count"
-        type="number"
-        min="0"
-        max="10"
-        value="1"
-        data-i18n-placeholder="rsvpCount"
-      />
+      <input name="count" type="number" min="0" max="10" value="1" data-i18n-placeholder="rsvpCount" />
 
-      <input
-        name="phone"
-        data-i18n-placeholder="rsvpPhone"
-        placeholder="연락처(선택)"
-      />
+      <input name="phone" data-i18n-placeholder="rsvpPhone" placeholder="연락처(선택)" />
 
-      <textarea
-        name="memo"
-        data-i18n-placeholder="rsvpMemo"
-        placeholder="메모(선택)"
-      ></textarea>
+      <textarea name="memo" data-i18n-placeholder="rsvpMemo" placeholder="메모(선택)"></textarea>
 
       <input name="website" class="hp" tabindex="-1" autocomplete="off" />
 
-      <button id="rsvpSubmitBtn" class="cta" type="submit" data-i18n="rsvpSubmit">
-        제출
-      </button>
+      <button id="rsvpSubmitBtn" class="cta" type="submit" data-i18n="rsvpSubmit">제출</button>
 
       <p class="small muted rsvp-privacy" data-i18n="rsvpPrivacy"></p>
       <p id="rsvpMsg" class="small" style="display:none;"></p>
     </form>
-
   </div>
 </div>
 
