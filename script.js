@@ -54,12 +54,12 @@ const I18N = {
     rsvp: "RSVP",
     rsvpHint: "참석 여부를 미리 알려주시면 감사하겠습니다.",
     rsvpBtn: "참석 여부 전달하기",
-    gift: "GIFT",
+    gift: "마음 전하실 곳",
     groomAccTitle: "신랑측 계좌번호",
     brideAccTitle: "신부측 계좌번호",
-    groomHolder: "신랑 예금주",
-    brideHolder: "신부 예금주",
-    brideMomHolder: "신부 어머니 예금주",
+    groomHolder: "신랑 JACOB MOCHOLI GARCIA",
+    brideHolder: "신부 안성경",
+    brideMomHolder: "신부 어머니 박희상",
     copyBtn: "복사하기",
     closing1: "저희의 새로운 시작에<br/>함께해 주셔서 진심으로 감사합니다.",
     closing2: "따뜻한 마음 오래도록 간직하며<br/>서로에게 좋은 부부가 되겠습니다.",
@@ -384,11 +384,15 @@ function applyAccountVisibility(){
   const bride = $("#brideAcc");
   if(!groom || !bride) return;
 
+  // 일단 둘 다 닫기
+  groom.open = false;
+  bride.open = false;
+
   // ✅ 경로 우선
   if(isKRPath()){
     groom.style.display = "none";
     bride.style.display = "";
-    bride.open = true;
+    // bride.open = true;
     return;
   }
 
