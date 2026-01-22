@@ -3,34 +3,36 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="default-lang" content="ko" />
 
   <title data-i18n="title">Invitación de boda</title>
 
   <!-- Open Graph (WhatsApp / SNS preview) -->
+  <title data-i18n="title">결혼식 초대장</title>
+  
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="¡Nos casamos!" />
-  <meta property="og:description" content="Jacob y 성경 · 2 de mayo de 2026. Nos encantaría compartir este día contigo." />
-  <meta property="og:url" content="https://noscasamosjs.com/" />
+  <meta property="og:title" content="Jacob & 성경 결혼합니다" />
+  <meta property="og:description" content="2026년 5월 2일, 소중한 날에 함께해 주세요." />
+  <meta property="og:url" content="https://noscasamosjs.com/kr/" />
 
-  <meta property="og:image" content="https://noscasamosjs.com/assets/images/og.jpg" />
-  <meta property="og:image:secure_url" content="https://noscasamosjs.com/assets/images/og.jpg" />
+  <meta property="og:image" content="https://noscasamosjs.com/assets/images/og-kr.jpg" />
+  <meta property="og:image:secure_url" content="https://noscasamosjs.com/assets/images/og-kr.jpg" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Jacob & 성경 웨딩 사진" />
 
-  <!-- (권장) 트위터 카드도 함께 -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="¡Nos casamos!" />
-  <meta name="twitter:description" content="Jacob y 성경 · 2 de mayo de 2026. Nos encantaría compartir este día contigo." />
-  <meta name="twitter:image" content="https://noscasamosjs.com/assets/images/og.jpg" />
+  <meta name="twitter:title" content="Jacob & 성경 결혼합니다" />
+  <meta name="twitter:description" content="2026년 5월 2일, 소중한 날에 함께해 주세요." />
+  <meta name="twitter:image" content="https://noscasamosjs.com/assets/images/og-kr.jpg" />
 
   <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="./style.css?v=3" />
+  <link rel="stylesheet" href="../style.css?v=3" />
 </head>
 
 <body>
@@ -38,7 +40,7 @@
 
   <!-- HERO -->
   <header class="hero" id="hero">
-    <img class="hero-img" src="./assets/images/hero.jpg" alt="" aria-hidden="true" />
+    <img class="hero-img" src="../assets/images/hero.jpg" alt="" aria-hidden="true" />
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
@@ -191,9 +193,9 @@
         <div class="acc-item">
           <div class="acc-left">
             <div class="acc-name" data-i18n="groomHolder">Titular (Novio)</div>
-            <div class="acc-no" id="groomAccText">국민 987-65-432109</div>
+            <div class="acc-no" id="groomAccText">ES43 2100 4301 9113 0029 9355</div>
           </div>
-          <button class="pill" type="button" data-copy-btn="국민 987-65-432109" data-i18n="copyBtn">Copiar</button>
+          <button class="pill" type="button" data-copy-btn="ES43 2100 4301 9113 0029 9355" data-i18n="copyBtn">Copiar</button>
         </div>   
       </details>
 
@@ -279,6 +281,6 @@
 
 <div id="toast"></div>
 
-<script src="./script.js?v=3" defer></script>
+<script src="../script.js?v=3" defer></script>
 </body>
 </html>
