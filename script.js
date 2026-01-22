@@ -10,20 +10,20 @@ const WEDDING = {
   // Google Apps Script 웹앱 URL
   rsvpEndpoint: "https://script.google.com/macros/s/AKfycbwnyWkqZDZ9EC4gZwy8GBVn0ALTE9uZ5WG2A4EcNqEen-JjXEfnMCebHuD-5OgAqS2yvA/exec",
 
-  bgmSrc: "./assets/audio/A Thousand Years.mp3",
-  videoSrc: "./assets/video/0502.mp4",
+  bgmSrc: "/assets/audio/A Thousand Years.mp3",
+  videoSrc: "/assets/video/0502.mp4",
 
   gallery: [
-    "./assets/images/gallery-01.jpg",
-    "./assets/images/gallery-02.jpg",
-    "./assets/images/gallery-03.jpg",
-    "./assets/images/gallery-04.jpg",
-    "./assets/images/gallery-05.jpg",
-    "./assets/images/gallery-06.jpg",
-    "./assets/images/gallery-07.jpg",
-    "./assets/images/gallery-08.jpg",
-    "./assets/images/gallery-09.jpg",
-    "./assets/images/gallery-10.jpg",
+    "/assets/images/gallery-01.jpg",
+    "/assets/images/gallery-02.jpg",
+    "/assets/images/gallery-03.jpg",
+    "/assets/images/gallery-04.jpg",
+    "/assets/images/gallery-05.jpg",
+    "/assets/images/gallery-06.jpg",
+    "/assets/images/gallery-07.jpg",
+    "/assets/images/gallery-08.jpg",
+    "/assets/images/gallery-09.jpg",
+    "/assets/images/gallery-10.jpg",
   ],
 
   weekStartsOnSunday: true,
