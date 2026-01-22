@@ -59,6 +59,7 @@ const I18N = {
     brideAccTitle: "신부측 계좌번호",
     groomHolder: "신랑 예금주",
     brideHolder: "신부 예금주",
+    brideMomHolder: "신부 어머니 예금주",
     copyBtn: "복사하기",
     closing1: "저희의 새로운 시작에<br/>함께해 주셔서 진심으로 감사합니다.",
     closing2: "따뜻한 마음 오래도록 간직하며<br/>서로에게 좋은 부부가 되겠습니다.",
@@ -117,6 +118,7 @@ const I18N = {
     brideAccTitle: "Bride's account",
     groomHolder: "Account holder (Groom)",
     brideHolder: "Account holder (Bride)",
+    brideMomHolder: "Account holder (Bride's mother)",
     copyBtn: "Copy",
     closing1: "Thank you for being part of our new beginning.",
     closing2: "With love and gratitude, we’ll cherish your warm wishes.",
@@ -175,6 +177,7 @@ const I18N = {
     brideAccTitle: "Cuenta de la novia",
     groomHolder: "Titular (Novio)",
     brideHolder: "Titular (Novia)",
+    brideMomHolder: "Titular (Madre de la novia)",
     copyBtn: "Copiar",
     closing1: "Muchas gracias por acompañarnos<br/>en este nuevo comienzo.",
     closing2: "Guardaremos con cariño<br/>tus buenos deseos.",
@@ -208,7 +211,36 @@ const I18N = {
   }
 };
 
-let currentLang = localStorage.getItem("wedding_lang") || "es";
+function getDefaultLang(){
+  const meta = document.querySelector('meta[name="default-lang"]');
+  const lang = meta?.getAttribute("content")?.toLowerCase();
+  if (lang && I18N[lang]) return lang;
+  return "es";
+}
+
+function getLangFromPath(){
+  const p = location.pathname.toLowerCase();
+  if (p.startsWith("/kr")) return "ko";
+  if (p.startsWith("/es")) return "es";
+  return null;
+}
+
+function getLangFromURL(){
+  const p = new URLSearchParams(location.search);
+  const lang = (p.get("lang") || "").toLowerCase();
+  if (I18N[lang]) return lang;
+  return null;
+}
+
+const urlLang   = getLangFromURL();   // ?lang=ko 같은 것
+const pathLang  = getLangFromPath();  // /kr /es
+const savedLang = localStorage.getItem("wedding_lang");
+
+let currentLang =
+  urlLang ||
+  pathLang ||
+  savedLang ||
+  getDefaultLang();
 
 /* =========================
    Helpers
@@ -340,11 +372,34 @@ function applyInvitationAddresses(){
 /* =========================
    5) 계좌 노출 조건
 ========================= */
+function isKRPath(){
+  return location.pathname.toLowerCase().startsWith("/kr");
+}
+function isESPath(){
+  return location.pathname.toLowerCase().startsWith("/es");
+}
+
 function applyAccountVisibility(){
   const groom = $("#groomAcc");
   const bride = $("#brideAcc");
   if(!groom || !bride) return;
 
+  // ✅ 경로 우선
+  if(isKRPath()){
+    groom.style.display = "none";
+    bride.style.display = "";
+    bride.open = true;
+    return;
+  }
+
+  if(isESPath()){
+    groom.style.display = "";
+    bride.style.display = "none";
+    groom.open = true;
+    return;
+  }
+
+  // ✅ 루트(/)는 언어 기준으로 fallback
   if(currentLang === "ko"){
     groom.style.display = "none";
     bride.style.display = "";
@@ -362,6 +417,21 @@ function applyAccountVisibility(){
 function applyLanguage(lang){
   currentLang = (I18N[lang] ? lang : "es");
   localStorage.setItem("wedding_lang", currentLang);
+
+  // ✅ /kr /es 경로 유지한 채 언어만 바꾸기
+  const path = location.pathname.toLowerCase();
+
+  // /kr에서는 KO가 기본이므로, 다른 언어를 선택하면 /es로 이동
+  if (path.startsWith("/kr") && currentLang !== "ko") {
+    location.href = "/es";
+    return;
+  }
+
+  // /es에서는 ES가 기본이므로, KO를 선택하면 /kr로 이동
+  if (path.startsWith("/es") && currentLang === "ko") {
+    location.href = "/kr";
+    return;
+  }
 
   const titleEl = document.querySelector('title[data-i18n="title"]');
   if(titleEl) titleEl.textContent = t("title");
