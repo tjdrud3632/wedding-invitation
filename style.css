@@ -610,6 +610,22 @@ details[open] summary::after{ content:"▴"; }
   outline: none;
 }
 
+/* ✅ 모바일에서 select 터치 영역(높이) 확보 */
+#rsvpForm select{
+  font-size: 16px; /* iOS zoom 방지 + 렌더 안정 */
+  padding-top: 14px;
+  padding-bottom: 14px;
+  min-height: 52px;          /* 터치하기 편한 높이 */
+  line-height: 1.2;
+  -webkit-appearance: none;  /* iOS 기본 UI로 눌리는 느낌 완화 */
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%237b1f1f' d='M5.5 7.5 10 12l4.5-4.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px 18px;
+  padding-right: 44px;       /* 화살표 자리 */
+}
+
 #rsvpForm button{
   width: 100%;
   box-sizing: border-box;
