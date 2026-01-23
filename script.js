@@ -357,16 +357,23 @@ function buildEmbedURL(address){
 }
 
 function initMapEmbed(){
+  const ceremonyVenue = $("#locCeremonyVenue");
+  const receptionVenue = $("#locReceptionVenue");
+
   const ceremonyAddr = $("#addrCeremony");
   const receptionAddr = $("#addrReception");
+
   const ceremonyMap = $("#gmapCeremony");
   const receptionMap = $("#gmapReception");
+
+  if(ceremonyVenue) ceremonyVenue.textContent = WEDDING.ceremony.venue;
+  if(receptionVenue) receptionVenue.textContent = WEDDING.reception.venue;
 
   if(ceremonyAddr) ceremonyAddr.textContent = WEDDING.ceremony.address;
   if(receptionAddr) receptionAddr.textContent = WEDDING.reception.address;
 
-  if(ceremonyMap) ceremonyMap.src = buildEmbedURL(WEDDING.ceremony.address);
-  if(receptionMap) receptionMap.src = buildEmbedURL(WEDDING.reception.address);
+  if(ceremonyMap) ceremonyMap.src = buildEmbedURL(WEDDING.ceremony.venue);
+  if(receptionMap) receptionMap.src = buildEmbedURL(WEDDING.reception.venue);
 }
 
 function applyInvitationAddresses(){

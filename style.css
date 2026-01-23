@@ -363,6 +363,16 @@ b,strong{ font-weight:500; }
   transform: translateY(-0.5px);
 }
 
+/* Location venue name */
+.loc-venue{
+  font-size: 15.5px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  margin: 4px 0 6px;
+  color: var(--ink);
+  text-align: center;
+}
+
 /* Buttons */
 .cta{
   display:inline-block;
