@@ -217,7 +217,7 @@ b,strong{ font-weight:500; }
   margin-bottom:8px;
   color:var(--ink);
   /* ✅ 시각적 중앙 보정 */
-  transform: translateX(-4px);
+  transform: translateX(-6px);
 }
 .inv-icon{
   font-size:14px;
@@ -360,7 +360,7 @@ b,strong{ font-weight:500; }
   justify-content:center;
   gap:8px;
   /* ✅ 시각적 중앙 보정 */
-  transform: translateX(-4px);
+  transform: translateX(-6px);
 }
 
 .loc-icon{
