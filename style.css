@@ -369,10 +369,9 @@ b,strong{ font-weight:500; }
   transform: translateY(-1px);
 }
 
-/* Location venue name */
 .loc-venue{
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 15.5px;
+  font-weight: 500;
   letter-spacing: .04em;
   margin: 4px 0 5px;
   color: var(--ink);
