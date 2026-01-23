@@ -4,8 +4,15 @@
 const WEDDING = {
   dateTimeLocal: "2026-05-02T12:30:00",
 
-  ceremony: { address: "Carretera Subida SantuarioS N, 46400 Cullera, Valencia, España" },
-  reception: { address: "Av. Joanot Martorell, 16, 46408 Faro de Cullera, Valencia, España" },
+  ceremony: {
+    venue: "Santuari de la Mare de Déu del Castell",
+    address: "Carretera Subida Santuario S/N, 46400 Cullera, Valencia, España"
+  },
+
+  reception: {
+    venue: "Hotel Sicania",
+    address: "Av. Joanot Martorell, 16, 46408 Faro de Cullera, Valencia, España"
+  },
 
   // Google Apps Script 웹앱 URL
   rsvpEndpoint: "https://script.google.com/macros/s/AKfycbwnyWkqZDZ9EC4gZwy8GBVn0ALTE9uZ5WG2A4EcNqEen-JjXEfnMCebHuD-5OgAqS2yvA/exec",
@@ -363,10 +370,16 @@ function initMapEmbed(){
 }
 
 function applyInvitationAddresses(){
-  const c = $("#metaCeremonyAddr");
-  const r = $("#metaReceptionAddr");
-  if(c) c.textContent = WEDDING.ceremony.address;
-  if(r) r.textContent = WEDDING.reception.address;
+  const cVenue = $("#metaCeremonyVenue");
+  const cAddr  = $("#metaCeremonyAddr");
+  const rVenue = $("#metaReceptionVenue");
+  const rAddr  = $("#metaReceptionAddr");
+
+  if(cVenue) cVenue.textContent = WEDDING.ceremony.venue;
+  if(cAddr)  cAddr.textContent  = WEDDING.ceremony.address;
+
+  if(rVenue) rVenue.textContent = WEDDING.reception.venue;
+  if(rAddr)  rAddr.textContent  = WEDDING.reception.address;
 }
 
 /* =========================
