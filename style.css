@@ -226,7 +226,7 @@ b,strong{ font-weight:500; }
   transform: translateY(-0.5px);
 }
 .inv-addr{
-  font-size:15px;
+  font-size:13px;
   /*font-weight:200;*/
   line-height:1.8;
   color:rgba(123,31,31,.85);
@@ -236,7 +236,7 @@ b,strong{ font-weight:500; }
   font-size: 15.5px;
   font-weight: 500;
   letter-spacing: .04em;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   color: var(--ink);
 }
 
@@ -371,10 +371,10 @@ b,strong{ font-weight:500; }
 
 /* Location venue name */
 .loc-venue{
-  font-size: 15.5px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   letter-spacing: .04em;
-  margin: 4px 0 6px;
+  margin: 4px 0 5px;
   color: var(--ink);
   text-align: center;
 }
