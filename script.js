@@ -31,6 +31,11 @@ const WEDDING = {
     "/assets/images/gallery-08.jpg",
     "/assets/images/gallery-09.jpg",
     "/assets/images/gallery-10.jpg",
+    "/assets/images/gallery-11.jpg",
+    "/assets/images/gallery-12.jpg",
+    "/assets/images/gallery-13.jpg",
+    "/assets/images/gallery-14.jpg",
+    "/assets/images/gallery-15.jpg",
   ],
 
   weekStartsOnSunday: true,
